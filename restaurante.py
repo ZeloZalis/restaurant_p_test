@@ -27,14 +27,16 @@ def agregar_categoria():
         print(f'Error: {e}\n')
     con.close()
 
-def mostrar_menu():
+def welcome():
     while True:
-        valor = int(input('\nBienvenido a la Gestión del Menú, qué desea realizar?\n1. Agregar una nueva categoría.\n2. Agregar nuevo plato.\n3. Salir.\n'))
+        valor = int(input('\nBienvenido a la Gestión del Menú, qué desea realizar?\n1. Agregar una nueva categoría.\n2. Agregar nuevo plato.\n3. Mostrar menú.\n4. Salir.\n'))
         if valor == 1:
             agregar_categoria()
         elif valor == 2:
             agregar_plato()
         elif valor == 3:
+            mostrar_menu()
+        elif valor == 4:
             break
         else:
             print('Ingrese un número válido.')
@@ -53,4 +55,19 @@ def agregar_plato():
     print(f'Se ha insertado el platillo "{platillo}" en la categoría {valor}.')
     con.commit()
     con.close()
-mostrar_menu()
+
+def mostrar_menu():
+    con = sqlite3.connect('restaurante.db')
+    cursor = con.cursor()
+    cursor.execute("SELECT * FROM categoria")
+    categorias = cursor.fetchall()
+    sum = 0
+    for n in categorias:
+        print(f'\nCategoría: {n[1]}')
+        print('Platos:')
+        cursor.execute(f"SELECT * FROM plato WHERE categoria_id = {sum+1}")
+        platon = cursor.fetchall()
+        sum+=1
+        for i in platon:
+            print(i[1])
+welcome()
