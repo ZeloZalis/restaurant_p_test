@@ -30,6 +30,7 @@ for n in categorias:
     texto_cat = Label(back, text=f'{n[1]}', background='#FFF3F1', font=texto_font)
     texto_cat.pack(anchor=S)
     cursor.execute(f'SELECT * FROM plato WHERE categoria_id = {sum+1}')
+    sum+=1
     platos = cursor.fetchall()
     for i in platos:
         texto2_font = font.Font(size = 10)
